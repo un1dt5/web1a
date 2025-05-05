@@ -1,0 +1,32 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Protect against XSS, clickjacking and other attacks
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-Content-Type-Options "nosniff"
+
+# Protect sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect htaccess
+RewriteRule /?\.htaccess$ - [F,L]
+
+# Handle assets
+RewriteCond %{REQUEST_URI} !^/assets
+RewriteCond %{REQUEST_URI} !^/uploads
+RewriteRule ^(assets|uploads)/(.*)$ src/$1/$2 [L]
+
+# Handle PHP files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Prevent directory listing
+Options -Indexes
+
+# Set default character set
+AddDefaultCharset UTF-8
