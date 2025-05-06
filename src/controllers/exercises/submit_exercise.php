@@ -1,7 +1,7 @@
 <?php
 
-require __DIR__ . '/../databases/connection.php';
-require __DIR__ . '/../models/Exercises.php';
+require __DIR__ . '/../../databases/connection.php';
+require __DIR__ . '/../../models/Exercises.php';
 
 
 header('Content-Type: application/json');
@@ -56,7 +56,7 @@ if (!in_array($ext, ['png', 'jpg', 'jpeg', 'docx', 'pdf', 'txt'])) {
     die(json_encode($result));
 }
 
-$path_upload = __DIR__ . '/../../uploads/submit_works/' . $filename . '.' . $ext;
+$path_upload = __DIR__ . '/../../../uploads/submit_works/' . $filename . '.' . $ext;
 
 if (move_uploaded_file($file["tmp_name"], $path_upload)) {
     $uploaded = '/uploads/submit_works/' . $filename . '.' . $ext;
